@@ -20,6 +20,22 @@ export const Route = createFileRoute("/")({
         content:
           "An editorial brand for people who take culture, technology, and taste seriously.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Nextique",
+          url: "/",
+          description:
+            "Modern editorial for technology, culture, finance, science, wellness, style and digital society.",
+        }),
+      },
     ],
   }),
   component: Index,

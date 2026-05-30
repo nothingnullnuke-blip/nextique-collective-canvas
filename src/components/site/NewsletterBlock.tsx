@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { NewsletterForm } from "./NewsletterForm";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -23,18 +24,7 @@ export function NewsletterBlock() {
             theatre. 14,200 quiet readers.
           </p>
 
-          {/* Inert — matches the footer "Soon" treatment */}
-          <div
-            aria-label="Newsletter signup, coming soon"
-            className="mt-12 flex max-w-xl items-center gap-3 hairline-b pb-3 opacity-70 select-none"
-          >
-            <span className="flex-1 text-[15px] text-text-subtle">your@email.com</span>
-            <span className="eyebrow text-text-subtle">Soon →</span>
-          </div>
-
-          <p className="meta mt-6 text-text-subtle">
-            Unsubscribe in one click. We will never share your address.
-          </p>
+          <NewsletterForm source="homepage" variant="block" ctaLabel="Subscribe" />
         </motion.div>
       </div>
     </section>

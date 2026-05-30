@@ -13,18 +13,45 @@ export const Route = createFileRoute("/article/$slug")({
     if (!article) throw notFound();
     return { article };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const a = loaderData?.article;
     if (!a) return { meta: [{ title: "Article — Nextique" }] };
+    const author = AUTHORS[a.author];
     return {
       meta: [
         { title: `${a.title} — Nextique` },
         { name: "description", content: a.dek },
+        { name: "author", content: author.name },
+        { property: "article:published_time", content: a.publishedAtISO },
+        { property: "article:author", content: author.name },
+        { property: "article:section", content: CATEGORIES[a.category].name },
         { property: "og:title", content: a.title },
         { property: "og:description", content: a.dek },
         { property: "og:type", content: "article" },
+        { property: "og:url", content: `/article/${params?.slug ?? a.slug}` },
         { property: "og:image", content: a.cover },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:image", content: a.cover },
+      ],
+      links: [{ rel: "canonical", href: `/article/${params?.slug ?? a.slug}` }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: a.title,
+            description: a.dek,
+            image: [a.cover],
+            datePublished: a.publishedAtISO,
+            author: { "@type": "Person", name: author.name },
+            publisher: {
+              "@type": "Organization",
+              name: "Nextique",
+            },
+            articleSection: CATEGORIES[a.category].name,
+          }),
+        },
       ],
     };
   },
@@ -35,6 +62,13 @@ export const Route = createFileRoute("/article/$slug")({
       <Link to="/" className="eyebrow mt-8 inline-block text-accent">
         ← Return home
       </Link>
+    </div>
+  ),
+  errorComponent: ({ error }) => (
+    <div className="container-editorial py-40 text-center">
+      <p className="eyebrow text-text-subtle">Error</p>
+      <h1 className="display-2 mt-4">Couldn't load this story</h1>
+      <p className="meta mt-3">{error.message}</p>
     </div>
   ),
   component: ArticlePage,

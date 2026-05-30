@@ -1,17 +1,24 @@
 import { Link } from "@tanstack/react-router";
+import { NewsletterForm } from "./NewsletterForm";
 
 const COLUMNS = [
   {
     title: "Sections",
-    links: ["Technology", "Culture", "Finance", "Science", "Style", "Digital Society"],
+    links: [
+      { label: "Technology", to: "/topic/$slug", slug: "technology" },
+      { label: "Culture", to: "/topic/$slug", slug: "culture" },
+      { label: "Finance", to: "/topic/$slug", slug: "finance" },
+      { label: "Science", to: "/topic/$slug", slug: "science" },
+      { label: "Style", to: "/topic/$slug", slug: "style" },
+      { label: "Digital Society", to: "/topic/$slug", slug: "digital-society" },
+    ],
   },
   {
     title: "Nextique",
-    links: ["About", "Masthead", "Newsletter", "Ethics", "Contact"],
-  },
-  {
-    title: "Follow",
-    links: ["RSS", "Twitter", "Are.na", "LinkedIn"],
+    links: [
+      { label: "About", to: "/about" as const },
+      { label: "Newsletter", to: "/newsletter" as const },
+    ],
   },
 ];
 
@@ -29,34 +36,47 @@ export function Footer() {
               taste seriously. Three considered stories a week.
             </p>
 
-            {/* Visually inert in Phase 1 — clearly labeled "Soon" so it doesn't read as broken */}
-            <div
-              aria-label="Newsletter signup, coming soon"
-              className="mt-8 flex max-w-sm items-center gap-3 hairline-b pb-2 opacity-60 select-none"
-            >
-              <span className="flex-1 meta text-text-subtle">your@email.com</span>
-              <span className="eyebrow text-text-subtle">Soon</span>
-            </div>
+            <NewsletterForm source="footer" variant="footer" />
           </div>
 
-          <div className="md:col-span-7 grid grid-cols-3 gap-8">
+          <div className="md:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
             {COLUMNS.map((col) => (
               <div key={col.title}>
                 <h4 className="eyebrow text-muted-foreground mb-5">{col.title}</h4>
                 <ul className="space-y-3">
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <Link
-                        to="/"
-                        className="text-[14px] text-foreground/85 transition-colors duration-200 hover:text-accent"
-                      >
-                        {l}
-                      </Link>
-                    </li>
-                  ))}
+                  {col.links.map((l) =>
+                    "slug" in l ? (
+                      <li key={l.label}>
+                        <Link
+                          to={l.to}
+                          params={{ slug: l.slug }}
+                          className="text-[14px] text-foreground/85 transition-colors duration-200 hover:text-accent"
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    ) : (
+                      <li key={l.label}>
+                        <Link
+                          to={l.to}
+                          className="text-[14px] text-foreground/85 transition-colors duration-200 hover:text-accent"
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    ),
+                  )}
                 </ul>
               </div>
             ))}
+            <div className="hidden md:block">
+              <h4 className="eyebrow text-muted-foreground mb-5">Follow</h4>
+              <ul className="space-y-3 text-[14px] text-foreground/85">
+                <li>RSS</li>
+                <li>Are.na</li>
+                <li>LinkedIn</li>
+              </ul>
+            </div>
           </div>
         </div>
 
