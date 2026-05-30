@@ -21,6 +21,8 @@ export function ArticleHero({ article }: { article: Article }) {
           className="h-full w-full object-cover"
           width={1920}
           height={1080}
+          loading="eager"
+          fetchPriority="high"
         />
         {/* Dark gradient overlay bottom */}
         <div

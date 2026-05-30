@@ -9,15 +9,31 @@ export const Route = createFileRoute("/topic/$slug")({
     if (!cat) throw notFound();
     return { category: cat };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const c = loaderData?.category;
     if (!c) return { meta: [{ title: "Topic — Nextique" }] };
+    const path = `/topic/${params?.slug ?? c.slug}`;
     return {
       meta: [
         { title: `${c.name} — Nextique` },
         { name: "description", content: c.description },
         { property: "og:title", content: `${c.name} — Nextique` },
         { property: "og:description", content: c.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: path },
+      ],
+      links: [{ rel: "canonical", href: path }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: `${c.name} — Nextique`,
+            description: c.description,
+            isPartOf: { "@type": "WebSite", name: "Nextique" },
+          }),
+        },
       ],
     };
   },
@@ -38,32 +54,19 @@ function TopicPage() {
   const accent = `var(${category.accentVar})`;
   const real = articlesByCategory(category.slug);
 
-  // Build a staggered grid by mixing real articles with related placeholders,
-  // remapped under this category so the page never reads empty.
-  const items = [
-    ...real.map((a) => ({
-      slug: a.slug,
-      title: a.title,
-      category: a.category,
-      readTime: a.readTime,
-      cover: a.cover,
-    })),
-    ...RELATED.map((r, i) => ({
-      ...r,
-      category: category.slug,
-      slug: real[0]?.slug ?? r.slug,
-      title:
-        i === 0
-          ? `The Long Bet on ${category.name}`
-          : i === 1
-          ? `Notes from a ${category.name} Bureau`
-          : `A Field Guide to ${category.name}`,
-    })),
-  ];
+  const items =
+    real.length > 0
+      ? real.map((a) => ({
+          slug: a.slug,
+          title: a.title,
+          category: a.category,
+          readTime: a.readTime,
+          cover: a.cover,
+        }))
+      : RELATED.map((r) => ({ ...r, category: category.slug }));
 
   return (
     <div>
-      {/* Header with subtle accent tint */}
       <section
         className="relative overflow-hidden hairline-b"
         style={{
@@ -76,9 +79,7 @@ function TopicPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="eyebrow" style={{ color: accent }}>
-              Section
-            </span>
+            <span className="eyebrow" style={{ color: accent }}>Section</span>
             <h1 className="display-1 mt-4 text-foreground">{category.name}</h1>
             <p className="mt-6 max-w-2xl font-serif italic text-[22px] leading-snug text-foreground/80">
               {category.description}
@@ -88,7 +89,6 @@ function TopicPage() {
         <div aria-hidden className="absolute inset-0 grain pointer-events-none" />
       </section>
 
-      {/* Staggered 2-column editorial grid */}
       <section className="container-editorial py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
           {items.map((item, i) => (
@@ -98,7 +98,6 @@ function TopicPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              // Intentional vertical offset on every other tile
               className={i % 2 === 1 ? "md:mt-24" : ""}
             >
               <CompactCard {...item} />
