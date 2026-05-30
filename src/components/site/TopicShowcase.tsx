@@ -77,18 +77,11 @@ export function TopicShowcase() {
             <a
               href="#"
               className="group relative flex h-full flex-col justify-between p-8 transition-colors duration-300 hover:bg-surface"
-              style={
-                {
-                  borderLeft: `2px solid ${t.accent}`,
-                } as React.CSSProperties
-              }
+              style={{ borderLeft: `2px solid ${t.accent}` } as React.CSSProperties}
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span
-                    className="eyebrow"
-                    style={{ color: t.accent }}
-                  >
+                  <span className="eyebrow" style={{ color: t.accent }}>
                     {t.name}
                   </span>
                   <span className="meta tabular-nums text-text-subtle">
@@ -111,6 +104,36 @@ export function TopicShowcase() {
             </a>
           </motion.li>
         ))}
+
+        {/* Eighth tile balances the 4-col grid — quiet CTA, not an orphan */}
+        <motion.li
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, delay: TOPICS.length * 0.04, ease: EASE }}
+          className="bg-background hidden xl:block"
+        >
+          <a
+            href="#"
+            className="group relative flex h-full flex-col justify-between p-8 transition-colors duration-300 hover:bg-surface"
+          >
+            <div>
+              <span className="eyebrow text-foreground/60">The Archive</span>
+              <p className="mt-6 font-serif text-[20px] leading-snug text-foreground/85">
+                Every Nextique story, indexed by year, issue, and section.
+              </p>
+            </div>
+            <div className="mt-10 flex items-center justify-between">
+              <span className="eyebrow text-foreground/60 group-hover:text-foreground transition-colors">
+                Browse archive
+              </span>
+              <ArrowUpRight
+                className="size-4 text-foreground/40 transition-all duration-500 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={1.5}
+              />
+            </div>
+          </a>
+        </motion.li>
       </ul>
     </section>
   );
