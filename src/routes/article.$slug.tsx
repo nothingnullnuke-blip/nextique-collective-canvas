@@ -1,4 +1,5 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+const DOMAIN = "https://id-preview--01700b05-4d29-4cbf-91ab-acec504e8727.lovable.app";
 import { getArticle, AUTHORS, CATEGORIES } from "@/lib/content";
 import { ArticleHero } from "@/components/site/ArticleHero";
 import { ArticleBody } from "@/components/site/ArticleBody";
@@ -29,9 +30,9 @@ export const Route = createFileRoute("/article/$slug")({
         { property: "og:description", content: a.dek },
         { property: "og:type", content: "article" },
         { property: "og:url", content: `/article/${params?.slug ?? a.slug}` },
-        { property: "og:image", content: a.cover },
+        { property: "og:image", content: `${DOMAIN}${a.cover}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: a.cover },
+        { name: "twitter:image", content: `${DOMAIN}${a.cover}` },
       ],
       links: [{ rel: "canonical", href: `/article/${params?.slug ?? a.slug}` }],
       scripts: [
@@ -42,7 +43,7 @@ export const Route = createFileRoute("/article/$slug")({
             "@type": "Article",
             headline: a.title,
             description: a.dek,
-            image: [a.cover],
+            image: [`${DOMAIN}${a.cover}`],
             datePublished: a.publishedAtISO,
             author: { "@type": "Person", name: author.name },
             publisher: {
