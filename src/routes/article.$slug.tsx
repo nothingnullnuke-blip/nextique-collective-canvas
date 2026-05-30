@@ -41,13 +41,13 @@ export const Route = createFileRoute("/article/$slug")({
 });
 
 function ArticlePage() {
-  const { article } = Route.useLoaderData();
+  const { article } = Route.useLoaderData() as { article: NonNullable<ReturnType<typeof getArticle>> };
   const cat = CATEGORIES[article.category];
   const author = AUTHORS[article.author];
 
   const toc = article.blocks
-    .filter((b): b is Extract<typeof b, { type: "h2" }> => b.type === "h2")
-    .map((b) => ({ id: b.id, text: b.text }));
+    .filter((b) => b.type === "h2")
+    .map((b) => ({ id: (b as { id: string }).id, text: (b as { text: string }).text }));
 
   return (
     <article className="pt-0">
