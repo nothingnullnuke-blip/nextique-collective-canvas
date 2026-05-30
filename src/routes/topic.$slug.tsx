@@ -106,6 +106,6 @@ function TopicPage() {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
