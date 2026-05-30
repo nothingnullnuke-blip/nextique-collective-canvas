@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeroFeature } from "@/components/site/HeroFeature";
+import { EditorialBentoGrid } from "@/components/site/EditorialBentoGrid";
+import { TopicShowcase } from "@/components/site/TopicShowcase";
+import { RankedList } from "@/components/site/RankedList";
+import { NewsletterBlock } from "@/components/site/NewsletterBlock";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,8 +29,10 @@ function Index() {
   return (
     <>
       <HeroFeature />
-      {/* Phase 2 reserves this vertical space for the editorial bento grid */}
-      <section aria-hidden className="h-[40vh]" />
+      <EditorialBentoGrid />
+      <TopicShowcase />
+      <RankedList />
+      <NewsletterBlock />
     </>
   );
 }
