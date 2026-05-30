@@ -67,7 +67,7 @@ export function HeroFeature() {
 
           <h1 className="display-1 text-foreground max-w-[18ch]">
             {HEADLINE.map((line, li) => (
-              <span key={li} className="block overflow-hidden">
+              <span key={li} className="block overflow-hidden pb-[0.14em]">
                 <motion.span
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}

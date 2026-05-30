@@ -48,7 +48,7 @@ export function FloatingTOC({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -8 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden xl:block fixed left-10 top-1/2 -translate-y-1/2 z-30 w-[200px]"
+          className="hidden [@media(min-width:1600px)]:block fixed left-10 top-1/2 -translate-y-1/2 z-40 w-[200px]"
           aria-label="Table of contents"
         >
           <div className="eyebrow mb-5 text-text-subtle">In this story</div>
