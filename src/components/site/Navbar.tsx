@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Search, Menu } from "lucide-react";
+import { Search } from "lucide-react";
 
 const NAV = [
   { label: "Technology" },
@@ -60,7 +60,7 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <button
               type="button"
               aria-label="Search"
@@ -73,9 +73,17 @@ export function Navbar() {
             <button
               type="button"
               aria-label="Open menu"
-              className="md:hidden inline-flex items-center justify-center size-10 text-foreground/80"
+              className="md:inline-flex hidden items-center justify-center size-10 text-foreground/80"
             >
-              <Menu className="size-5" strokeWidth={1.5} />
+              <Search className="size-4" strokeWidth={1.5} />
+            </button>
+            {/* Mobile menu trigger — editorial "MENU" eyebrow, no default burger */}
+            <button
+              type="button"
+              aria-label="Open menu"
+              className="md:hidden inline-flex items-center justify-center h-10 px-2 eyebrow text-foreground/85 hover:text-foreground"
+            >
+              Menu
             </button>
           </div>
         </div>
