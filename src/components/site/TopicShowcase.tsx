@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { MagneticCard } from "./motion-primitives";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
