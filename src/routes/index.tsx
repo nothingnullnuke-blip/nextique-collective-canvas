@@ -1,29 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { HeroFeature } from "@/components/site/HeroFeature";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Nextique — Modern editorial for technology, culture, and taste" },
+      {
+        name: "description",
+        content:
+          "An editorial brand for people who take culture, technology, and taste seriously. Three considered stories a week.",
+      },
+      { property: "og:title", content: "Nextique" },
+      {
+        property: "og:description",
+        content:
+          "An editorial brand for people who take culture, technology, and taste seriously.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <HeroFeature />
+      {/* Phase 2 reserves this vertical space for the editorial bento grid */}
+      <section aria-hidden className="h-[40vh]" />
+    </>
   );
 }
