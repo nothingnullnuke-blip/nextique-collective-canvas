@@ -83,35 +83,48 @@ export function TopicShowcase() {
             transition={{ duration: 0.6, delay: i * 0.04, ease: EASE }}
             className="bg-background"
           >
-            <Link
-              to="/topic/$slug"
-              params={{ slug: t.slug }}
-              className="group relative flex h-full flex-col justify-between p-8 transition-colors duration-300 hover:bg-surface"
-              style={{ borderLeft: `2px solid ${t.accent}` } as React.CSSProperties}
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="eyebrow" style={{ color: t.accent }}>
-                    {t.name}
-                  </span>
-                  <span className="meta tabular-nums text-text-subtle">
-                    {String(t.count).padStart(3, "0")}
-                  </span>
+            <MagneticCard strength={4} className="h-full">
+              <Link
+                to="/topic/$slug"
+                params={{ slug: t.slug }}
+                className="group relative flex h-full flex-col justify-between p-8 transition-all duration-300 hover:bg-surface hover:translate-x-[2px]"
+                style={
+                  {
+                    borderLeft: `2px solid ${t.accent}`,
+                    boxShadow: `inset 4px 0 0 0 transparent`,
+                  } as React.CSSProperties
+                }
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = `inset 2px 0 0 0 ${t.accent}`;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = `inset 4px 0 0 0 transparent`;
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="eyebrow" style={{ color: t.accent }}>
+                      {t.name}
+                    </span>
+                    <span className="meta tabular-nums text-text-subtle">
+                      {String(t.count).padStart(3, "0")}
+                    </span>
+                  </div>
+                  <p className="mt-6 font-serif text-[20px] leading-snug text-foreground/90">
+                    {t.blurb}
+                  </p>
                 </div>
-                <p className="mt-6 font-serif text-[20px] leading-snug text-foreground/90">
-                  {t.blurb}
-                </p>
-              </div>
-              <div className="mt-10 flex items-center justify-between">
-                <span className="eyebrow text-foreground/60 group-hover:text-foreground transition-colors">
-                  Enter section
-                </span>
-                <ArrowUpRight
-                  className="size-4 text-foreground/40 transition-all duration-500 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  strokeWidth={1.5}
-                />
-              </div>
-            </Link>
+                <div className="mt-10 flex items-center justify-between">
+                  <span className="eyebrow text-foreground/60 group-hover:text-foreground transition-colors">
+                    Enter section
+                  </span>
+                  <ArrowUpRight
+                    className="size-4 text-foreground/40 transition-all duration-500 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </Link>
+            </MagneticCard>
           </motion.li>
         ))}
 
