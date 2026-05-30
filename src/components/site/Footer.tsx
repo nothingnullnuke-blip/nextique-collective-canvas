@@ -48,7 +48,7 @@ export function Footer() {
                     <li key={l}>
                       <Link
                         to="/"
-                        className="text-[14px] text-foreground/85 hover:text-foreground transition-colors"
+                        className="text-[14px] text-foreground/85 transition-colors duration-200 hover:text-accent"
                       >
                         {l}
                       </Link>
