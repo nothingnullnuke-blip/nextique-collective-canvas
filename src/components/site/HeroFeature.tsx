@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import heroImage from "@/assets/hero-technology.jpg";
 
 const HEADLINE = ["The quiet", "consolidation", "of intelligence."];
@@ -96,7 +97,11 @@ export function HeroFeature() {
             transition={{ delay: 1.25, duration: 0.7, ease: EASE }}
             className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-5"
           >
-            <a href="#" className="group inline-flex items-center gap-3 text-foreground">
+            <Link
+              to="/article/$slug"
+              params={{ slug: "the-quiet-rewrite" }}
+              className="group inline-flex items-center gap-3 text-foreground"
+            >
               <span className="eyebrow">Read the story</span>
               <span className="relative inline-flex size-10 items-center justify-center rounded-full border border-border-strong transition-colors duration-300 group-hover:border-foreground">
                 <ArrowUpRight
@@ -104,7 +109,7 @@ export function HeroFeature() {
                   strokeWidth={1.5}
                 />
               </span>
-            </a>
+            </Link>
 
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 meta">
               <span className="text-foreground/85">Words by Eliot Mercer</span>

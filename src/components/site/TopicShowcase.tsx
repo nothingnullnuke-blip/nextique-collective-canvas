@@ -1,47 +1,55 @@
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const TOPICS = [
   {
     name: "Technology",
+    slug: "technology",
     accent: "var(--cat-technology)",
     blurb: "AI, frontier labs, the new tools of work.",
     count: 142,
   },
   {
     name: "Culture",
+    slug: "culture",
     accent: "var(--cat-culture)",
     blurb: "Film, music, books, the slow currents of taste.",
     count: 98,
   },
   {
     name: "Finance",
+    slug: "finance",
     accent: "var(--cat-finance)",
     blurb: "Capital, markets, and what private money is actually doing.",
     count: 76,
   },
   {
     name: "Science",
+    slug: "science",
     accent: "var(--cat-science)",
     blurb: "Space, climate, the experiments that matter.",
     count: 54,
   },
   {
     name: "Wellness",
+    slug: "wellness",
     accent: "var(--cat-wellness)",
     blurb: "Longevity and the evidence behind it.",
     count: 41,
   },
   {
     name: "Style",
+    slug: "style",
     accent: "var(--cat-style)",
     blurb: "Architecture, fashion, design as authorship.",
     count: 63,
   },
   {
     name: "Digital Society",
+    slug: "digital-society",
     accent: "var(--cat-society)",
     blurb: "The creator economy, AI ethics, and the social fabric.",
     count: 89,
@@ -74,8 +82,9 @@ export function TopicShowcase() {
             transition={{ duration: 0.6, delay: i * 0.04, ease: EASE }}
             className="bg-background"
           >
-            <a
-              href="#"
+            <Link
+              to="/topic/$slug"
+              params={{ slug: t.slug }}
               className="group relative flex h-full flex-col justify-between p-8 transition-colors duration-300 hover:bg-surface"
               style={{ borderLeft: `2px solid ${t.accent}` } as React.CSSProperties}
             >
@@ -101,7 +110,7 @@ export function TopicShowcase() {
                   strokeWidth={1.5}
                 />
               </div>
-            </a>
+            </Link>
           </motion.li>
         ))}
 
