@@ -12,4 +12,20 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 500,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules/framer-motion")) return "motion";
+            if (id.includes("node_modules/react-dom")) return "react-dom";
+            if (id.includes("node_modules/react/") || id.includes("node_modules/react@")) return "react";
+            if (id.includes("node_modules/@tanstack")) return "tanstack";
+            if (id.includes("node_modules/lucide-react")) return "icons";
+          },
+        },
+      },
+    },
+  },
 });
