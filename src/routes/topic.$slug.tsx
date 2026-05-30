@@ -62,7 +62,7 @@ function TopicPage() {
   ];
 
   return (
-    <main>
+    <div>
       {/* Header with subtle accent tint */}
       <section
         className="relative overflow-hidden hairline-b"
@@ -106,6 +106,6 @@ function TopicPage() {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

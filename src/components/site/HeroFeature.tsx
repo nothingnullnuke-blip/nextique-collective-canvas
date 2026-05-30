@@ -102,10 +102,12 @@ export function HeroFeature() {
               params={{ slug: "the-quiet-rewrite" }}
               className="group inline-flex items-center gap-3 text-foreground"
             >
-              <span className="eyebrow">Read the story</span>
-              <span className="relative inline-flex size-10 items-center justify-center rounded-full border border-border-strong transition-colors duration-300 group-hover:border-foreground">
+              <span className="eyebrow transition-colors duration-300 group-hover:text-accent">
+                Read the story
+              </span>
+              <span className="relative inline-flex size-10 items-center justify-center rounded-full border border-border-strong overflow-hidden transition-colors duration-300 group-hover:border-foreground group-hover:bg-foreground">
                 <ArrowUpRight
-                  className="size-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="size-4 transition-all duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-background"
                   strokeWidth={1.5}
                 />
               </span>

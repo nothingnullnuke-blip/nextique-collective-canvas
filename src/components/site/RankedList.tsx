@@ -73,15 +73,19 @@ export function RankedList() {
               className="group grid grid-cols-[auto_1fr] gap-x-8 py-8 transition-colors"
             >
               <span
-                className="font-serif text-[40px] leading-none tabular-nums text-text-subtle group-hover:text-foreground/50 transition-colors duration-500 pt-1"
+                className="font-serif text-[40px] leading-none tabular-nums text-text-subtle group-hover:text-foreground/60 transition-colors duration-500 pt-1"
+                style={{ ["--rank-accent" as string]: s.accent }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <span className="eyebrow" style={{ color: s.accent }}>
+                <span
+                  className="eyebrow inline-block opacity-0 -translate-x-2 transition-all duration-400 group-hover:opacity-100 group-hover:translate-x-0"
+                  style={{ color: s.accent }}
+                >
                   {s.category}
                 </span>
-                <h3 className="font-serif text-[24px] md:text-[26px] leading-[1.18] tracking-tight mt-3 text-foreground group-hover:text-foreground/90">
+                <h3 className="font-serif text-[24px] md:text-[26px] leading-[1.18] tracking-tight mt-3 text-foreground transition-colors group-hover:text-foreground/90">
                   {s.title}
                 </h3>
                 <p className="meta mt-3">{s.read} read</p>
