@@ -1,23 +1,36 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { Search } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Search, ChevronDown } from "lucide-react";
 import { SearchModal } from "./SearchModal";
 import { MobileMenu } from "./MobileMenu";
-import { CATEGORIES } from "@/lib/content";
+import { CATEGORIES, type CategorySlug } from "@/lib/content";
 
-const NAV = [
-  { label: "Technology", slug: "technology" as const },
-  { label: "Culture", slug: "culture" as const },
-  { label: "Finance", slug: "finance" as const },
-  { label: "Science", slug: "science" as const },
-  { label: "Style", slug: "style" as const },
+const TOPICS: { label: string; slug: CategorySlug }[] = [
+  { label: "Technology", slug: "technology" },
+  { label: "Culture", slug: "culture" },
+  { label: "Finance", slug: "finance" },
+  { label: "Science", slug: "science" },
+  { label: "Wellness", slug: "wellness" },
+  { label: "Style", slug: "style" },
+  { label: "Digital Society", slug: "digital-society" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [topicsOpen, setTopicsOpen] = useState(false);
+  const closeTimer = useRef<number | null>(null);
+
+  const openTopics = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setTopicsOpen(true);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setTopicsOpen(false), 140);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -69,16 +82,79 @@ export function Navbar() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8">
-              {NAV.map((item) => (
-                <Link
-                  key={item.slug}
-                  to="/topic/$slug"
-                  params={{ slug: item.slug }}
-                  className="eyebrow text-foreground/65 hover:text-foreground transition-opacity duration-200"
+              <div
+                className="relative"
+                onMouseEnter={openTopics}
+                onMouseLeave={scheduleClose}
+              >
+                <button
+                  type="button"
+                  aria-haspopup="menu"
+                  aria-expanded={topicsOpen}
+                  onClick={() => setTopicsOpen((v) => !v)}
+                  className="eyebrow text-foreground/70 hover:text-foreground transition-opacity duration-200 inline-flex items-center gap-1.5"
                 >
-                  {item.label}
-                </Link>
-              ))}
+                  Topics
+                  <ChevronDown
+                    className={
+                      "size-3 transition-transform duration-300 " +
+                      (topicsOpen ? "rotate-180" : "")
+                    }
+                    strokeWidth={1.5}
+                  />
+                </button>
+                <AnimatePresence>
+                  {topicsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      onMouseEnter={openTopics}
+                      onMouseLeave={scheduleClose}
+                      role="menu"
+                      className="absolute left-0 top-full pt-3 w-[240px]"
+                    >
+                      <div className="rounded-sm bg-background/95 backdrop-blur-xl border border-border shadow-2xl py-2">
+                        {TOPICS.map((t) => {
+                          const accent = `var(${CATEGORIES[t.slug].accentVar})`;
+                          return (
+                            <Link
+                              key={t.slug}
+                              to="/topic/$slug"
+                              params={{ slug: t.slug }}
+                              onClick={() => setTopicsOpen(false)}
+                              role="menuitem"
+                              className="group flex items-center gap-3 px-4 py-2.5 text-foreground/75 hover:text-foreground transition-colors"
+                            >
+                              <span
+                                aria-hidden
+                                className="h-1.5 w-1.5 rounded-full flex-shrink-0 transition-transform duration-300 group-hover:scale-150"
+                                style={{ background: accent }}
+                              />
+                              <span className="font-serif text-[15px] tracking-tight">
+                                {t.label}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <Link
+                to="/newsletter"
+                className="eyebrow text-foreground/70 hover:text-foreground transition-opacity duration-200"
+              >
+                Newsletter
+              </Link>
+              <Link
+                to="/about"
+                className="eyebrow text-foreground/70 hover:text-foreground transition-opacity duration-200"
+              >
+                About
+              </Link>
             </nav>
 
             <div className="flex items-center gap-2">
