@@ -9,6 +9,7 @@ const COLUMNS = [
       { label: "Culture", to: "/topic/$slug", slug: "culture" },
       { label: "Finance", to: "/topic/$slug", slug: "finance" },
       { label: "Science", to: "/topic/$slug", slug: "science" },
+      { label: "Wellness", to: "/topic/$slug", slug: "wellness" },
       { label: "Style", to: "/topic/$slug", slug: "style" },
       { label: "Digital Society", to: "/topic/$slug", slug: "digital-society" },
     ],
