@@ -70,13 +70,6 @@ export function Navbar() {
               <span>Search</span>
               <kbd className="ml-2 text-[10px] text-text-subtle tracking-widest">⌘K</kbd>
             </button>
-            <button
-              type="button"
-              aria-label="Open menu"
-              className="md:inline-flex hidden items-center justify-center size-10 text-foreground/80"
-            >
-              <Search className="size-4" strokeWidth={1.5} />
-            </button>
             {/* Mobile menu trigger — editorial "MENU" eyebrow, no default burger */}
             <button
               type="button"

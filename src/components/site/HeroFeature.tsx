@@ -47,14 +47,14 @@ export function HeroFeature() {
         </div>
       </motion.div>
 
-      {/* Hero content */}
-      <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col justify-end pb-24 pt-40 md:pb-32">
-        <div className="max-w-4xl">
+      {/* Hero content — anchored to bottom-left so the image breathes above */}
+      <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col pb-16 md:pb-20">
+        <div className="mt-auto max-w-4xl pt-32">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
-            className="flex items-center gap-3 mb-8"
+            className="flex items-center gap-3 mb-6"
           >
             <span className="h-px w-10" style={{ background: "var(--cat-technology)" }} />
             <span className="eyebrow" style={{ color: "var(--cat-technology)" }}>
