@@ -4,6 +4,9 @@ import { EditorialBentoGrid } from "@/components/site/EditorialBentoGrid";
 import { TopicShowcase } from "@/components/site/TopicShowcase";
 import { RankedList } from "@/components/site/RankedList";
 import { NewsletterBlock } from "@/components/site/NewsletterBlock";
+import heroImage from "@/assets/hero-technology.jpg";
+
+const DOMAIN = "https://id-preview--01700b05-4d29-4cbf-91ab-acec504e8727.lovable.app";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,6 +25,9 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
+      { property: "og:image", content: `${DOMAIN}${heroImage}` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${DOMAIN}${heroImage}` },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [
