@@ -184,4 +184,15 @@
     max-width: 680px;
     margin-inline: auto;
   }
+  /* Drop cap on the opening paragraph of long-form articles */
+  .article-dropcap::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    float: left;
+    font-size: 5.5rem;
+    line-height: 0.9;
+    padding-right: 0.65rem;
+    padding-top: 0.35rem;
+    color: var(--foreground);
+  }
 }
