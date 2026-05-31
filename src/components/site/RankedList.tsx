@@ -23,10 +23,11 @@ export function RankedList() {
         <span className="hidden md:inline meta">Issue 001 · 30 May 2026</span>
       </motion.div>
 
-      <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-px bg-border">
+      <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-16">
         {stories.map((s, i) => {
           const cat = CATEGORIES[s.category];
           const accent = `var(${cat.accentVar})`;
+          const isLast = i === stories.length - 1;
           return (
             <motion.li
               key={s.slug}
@@ -39,16 +40,13 @@ export function RankedList() {
               <Link
                 to="/article/$slug"
                 params={{ slug: s.slug }}
-                className="group grid grid-cols-[auto_1fr] gap-x-8 py-8 transition-colors"
+                className={`group grid grid-cols-[auto_1fr] gap-x-8 py-8 transition-colors ${isLast ? "pb-16" : ""}`}
               >
                 <span className="font-serif text-[40px] leading-none tabular-nums text-text-subtle group-hover:text-foreground/60 transition-colors duration-500 pt-1">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <span
-                    className="eyebrow inline-block opacity-0 -translate-x-2 transition-all duration-400 group-hover:opacity-100 group-hover:translate-x-0"
-                    style={{ color: accent }}
-                  >
+                  <span className="eyebrow inline-block" style={{ color: accent }}>
                     {cat.name}
                   </span>
                   <h3 className="font-serif text-[24px] md:text-[26px] leading-[1.18] tracking-tight mt-3 text-foreground transition-colors group-hover:text-foreground/90">
