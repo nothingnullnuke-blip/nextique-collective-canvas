@@ -40,7 +40,7 @@ export function HeroFeature() {
       >
         <div className="container-editorial pt-6 flex items-center justify-between">
           <span className="eyebrow text-foreground/70">
-            Issue 001 · Saturday, 30 May 2026
+            Issue 001 · {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
           </span>
           <span className="hidden md:inline eyebrow text-foreground/50">
             The Cover Story
