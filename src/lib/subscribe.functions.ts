@@ -4,7 +4,7 @@ import { createHash } from "crypto";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-const N8N_WEBHOOK_URL = "https://meran8n.dpdns.org/webhook/nextique-subscriber";
+const N8N_WEBHOOK_URL = "https://meran8n.dpdns.org/webhook-test/nextique-subscriber";
 const MAX_ATTEMPTS_PER_HOUR = 3;
 
 const inputSchema = z.object({
@@ -24,9 +24,7 @@ function getClientIp(): string {
   try {
     const req = getRequest();
     const fwd =
-      getRequestHeader("cf-connecting-ip") ||
-      getRequestHeader("x-real-ip") ||
-      getRequestHeader("x-forwarded-for");
+      getRequestHeader("cf-connecting-ip") || getRequestHeader("x-real-ip") || getRequestHeader("x-forwarded-for");
     if (fwd) return fwd.split(",")[0]!.trim();
     // Fallback to a stable bucket if no IP can be derived
     return new URL(req.url).hostname || "unknown";
@@ -40,11 +38,7 @@ function hashIp(ip: string): string {
   return createHash("sha256").update(`${salt}:${ip}`).digest("hex");
 }
 
-async function fireWebhook(payload: {
-  email: string;
-  source: string;
-  subscribed_at: string;
-}) {
+async function fireWebhook(payload: { email: string; source: string; subscribed_at: string }) {
   try {
     const res = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
@@ -55,9 +49,7 @@ async function fireWebhook(payload: {
       body: JSON.stringify(payload),
     });
     if (!res.ok) {
-      console.error(
-        `[subscribe] n8n webhook returned ${res.status} ${res.statusText}`,
-      );
+      console.error(`[subscribe] n8n webhook returned ${res.status} ${res.statusText}`);
     }
   } catch (err) {
     console.error("[subscribe] n8n webhook failed:", err);
@@ -105,15 +97,13 @@ export const subscribe = createServerFn({ method: "POST" })
     const email = data.email.toLowerCase();
     const subscribed_at = new Date().toISOString();
 
-    const { error } = await supabaseAdmin
-      .from("subscribers")
-      .insert({
-        email,
-        source: data.source,
-        ip_hash,
-        user_agent,
-        confirmed: false,
-      });
+    const { error } = await supabaseAdmin.from("subscribers").insert({
+      email,
+      source: data.source,
+      ip_hash,
+      user_agent,
+      confirmed: false,
+    });
 
     if (error) {
       // 23505 = unique_violation -> duplicate email
