@@ -4,7 +4,7 @@ import { createHash } from "crypto";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-const N8N_WEBHOOK_URL = "https://meran8n.dpdns.org/webhook-test/nextique-subscriber";
+const N8N_WEBHOOK_URL = "https://meran8n.dpdns.org/webhook/nextique-subscriber";
 const MAX_ATTEMPTS_PER_HOUR = 3;
 
 const inputSchema = z.object({
