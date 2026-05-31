@@ -16,22 +16,31 @@ export type Database = {
     Tables: {
       subscribers: {
         Row: {
+          confirmed: boolean
           created_at: string
           email: string
           id: string
+          ip_hash: string | null
           source: string
+          user_agent: string | null
         }
         Insert: {
+          confirmed?: boolean
           created_at?: string
           email: string
           id?: string
+          ip_hash?: string | null
           source?: string
+          user_agent?: string | null
         }
         Update: {
+          confirmed?: boolean
           created_at?: string
           email?: string
           id?: string
+          ip_hash?: string | null
           source?: string
+          user_agent?: string | null
         }
         Relationships: []
       }

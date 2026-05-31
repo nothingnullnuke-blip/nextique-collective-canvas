@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { subscribe } from "@/lib/subscribe.functions";
 
 type Source = "homepage" | "footer" | "newsletter-page";
-type Status = "idle" | "loading" | "success" | "duplicate" | "error";
+type Status =
+  | "idle"
+  | "loading"
+  | "success"
+  | "duplicate"
+  | "rate_limited"
+  | "error";
 
 const emailSchema = z.string().trim().email().max(255);
 
@@ -46,8 +53,10 @@ export function NewsletterForm({
   ctaLabel?: string;
 }) {
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<Status>("idle");
   const [clientError, setClientError] = useState<string | null>(null);
+  const subscribeFn = useServerFn(subscribe);
 
   const compact = variant === "footer";
 
@@ -85,36 +94,61 @@ export function NewsletterForm({
 
     setStatus("loading");
 
-    const { error } = await supabase
-      .from("subscribers")
-      .insert({ email: parsed.data, source });
+    try {
+      const result = await subscribeFn({
+        data: { email: parsed.data, source, website },
+      });
 
-    if (!error) {
-      markSubmitted(parsed.data);
-      setStatus("success");
-      return;
+      if (result.status === "success") {
+        markSubmitted(parsed.data);
+        setStatus("success");
+        return;
+      }
+      if (result.status === "duplicate") {
+        markSubmitted(parsed.data);
+        setStatus("duplicate");
+        return;
+      }
+      if (result.status === "rate_limited") {
+        setStatus("rate_limited");
+        return;
+      }
+      setStatus("error");
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
     }
-
-    // 23505 = unique_violation
-    if (error.code === "23505") {
-      markSubmitted(parsed.data);
-      setStatus("duplicate");
-      return;
-    }
-
-    setStatus("error");
   }
+
+  const helperMessage =
+    clientError ??
+    (status === "error"
+      ? "Something went wrong. Try again."
+      : status === "rate_limited"
+        ? "Too many attempts. Please try again later."
+        : null);
 
   return (
     <form
       onSubmit={onSubmit}
       noValidate
-      className={
-        compact
-          ? "mt-8 max-w-sm"
-          : "mt-12 max-w-xl"
-      }
+      className={compact ? "mt-8 max-w-sm" : "mt-12 max-w-xl"}
     >
+      {/* Honeypot — invisible to humans, irresistible to bots.
+          Uses display:none on purpose; type="hidden" would not deter bots. */}
+      <div aria-hidden="true" style={{ display: "none" }}>
+        <label htmlFor={`website-${source}`}>Website</label>
+        <input
+          id={`website-${source}`}
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
+
       <div
         className={
           compact
@@ -133,7 +167,7 @@ export function NewsletterForm({
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            if (status === "error") setStatus("idle");
+            if (status === "error" || status === "rate_limited") setStatus("idle");
             if (clientError) setClientError(null);
           }}
           className={
@@ -146,22 +180,38 @@ export function NewsletterForm({
         <button
           type="submit"
           disabled={status === "loading"}
+          aria-busy={status === "loading"}
           className={
-            "eyebrow transition-colors duration-200 " +
+            "eyebrow transition-colors duration-200 inline-flex items-center gap-2 " +
             (status === "loading"
               ? "text-text-subtle"
               : "text-foreground hover:text-accent-gold")
           }
         >
-          {status === "loading" ? "Sending…" : compact ? "Join →" : ctaLabel + " →"}
+          {status === "loading" ? (
+            <>
+              <span
+                aria-hidden="true"
+                className="inline-block h-3 w-3 rounded-full border border-current border-t-transparent animate-spin"
+              />
+              <span className="sr-only">Sending</span>
+              <span aria-hidden="true">→</span>
+            </>
+          ) : (
+            <>{compact ? "Join →" : ctaLabel + " →"}</>
+          )}
         </button>
       </div>
 
-      {clientError ? (
-        <p className="meta mt-3 text-foreground/70">{clientError}</p>
-      ) : status === "error" ? (
-        <p className="meta mt-3 text-foreground/70">
-          Something went wrong. Try again.
+      {helperMessage ? (
+        <p
+          className={
+            (compact ? "mt-3 text-[14px] " : "mt-3 text-[15px] ") +
+            "font-serif italic text-foreground/70"
+          }
+          role="status"
+        >
+          {helperMessage}
         </p>
       ) : (
         <p className="meta mt-3 text-text-subtle">
