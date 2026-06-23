@@ -127,6 +127,7 @@ export type Article = {
   publishedAtISO: string;
   readTime: number;
   cover: string;
+  tags: string[];
   blocks: Block[];
 };
 
