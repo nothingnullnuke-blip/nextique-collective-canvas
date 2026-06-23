@@ -91,7 +91,7 @@ function ArticlePage() {
       <ArticleHero article={article} />
       <ArticleBody blocks={article.blocks} accentVar={cat.accentVar} />
       <AuthorCard author={author} />
-      <RelatedArticles />
+      <RelatedArticles current={article} />
     </article>
   );
 }
