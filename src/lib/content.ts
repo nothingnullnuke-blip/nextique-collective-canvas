@@ -161,6 +161,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-28",
     readTime: 11,
     cover: heroTech,
+    tags: ["ai", "machine-learning", "research", "regulation", "privacy", "infrastructure"],
     blocks: [
       { type: "p", text: "The first time I walked into the lab in Zürich, the only sound was the soft mechanical breath of the cooling system. Two engineers were arguing about a benchmark in a tone usually reserved for arguments about wine. On a monitor behind them, a model was being patiently taught — not what to remember, but what to let go. They had spent six months on the problem. They told me, with the kind of pride only researchers allow themselves, that it was finally beginning to forget." },
       { type: "p", text: "For most of the last decade, the dominant story in artificial intelligence has been one of accumulation. Bigger models, bigger datasets, bigger claims. Scale, the founders kept telling us, was the only thing that mattered. And for a while, the scoreboard agreed. But somewhere between the third and the fourth generation of foundation models, a different question quietly displaced the first one. It is no longer interesting that a model can remember everything. The interesting question, now, is what it should choose to remember at all." },
@@ -184,6 +185,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-26",
     readTime: 9,
     cover: relatedCulture,
+    tags: ["institutions", "design", "operations", "audience", "europe", "curation"],
     blocks: standardBody(
       "museum",
       "The new director of the Stedelijk does not call her job curation. She calls it product. Her morning standup, in a converted print room on the second floor of the museum, looks like any growth-stage Slack meeting in Amsterdam: a backlog, a sprint, a retention dashboard glowing on the far wall. The objects on the gallery floor below are five centuries old. The vocabulary upstairs is six years old, and it is winning.",
@@ -206,6 +208,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-24",
     readTime: 12,
     cover: relatedFinance,
+    tags: ["markets", "credit", "regulation", "institutions", "risk", "infrastructure"],
     blocks: standardBody(
       "credit",
       "For most of the last hundred years, the answer to who lends money was unromantic and reassuringly boring: a bank. The answer in 2026 is something else. Direct lending funds, business development companies, infrastructure debt vehicles, opportunistic credit sleeves at the largest alternative asset managers — together they now sit on more than three trillion dollars in dry powder and deployed capital. Private credit is no longer alternative. In several corners of the middle market, it is the market.",
@@ -228,6 +231,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-22",
     readTime: 10,
     cover: relatedScience,
+    tags: ["astronomy", "research", "data", "infrastructure", "cosmology", "telescopes"],
     blocks: standardBody(
       "sky",
       "The telescope sits at four thousand meters above sea level, on a ridge so dry that the engineers who built it had to import their own bottled humidity for the optics. It is not large. By the standards of the next-generation observatories now coming online in Chile, it is almost a museum piece. But for five years, while the press releases were going to the bigger machines down the road, this small survey instrument has been quietly photographing the same patches of sky, night after night, and producing what astronomers now believe is the most useful single dataset of the decade.",
@@ -250,6 +254,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-20",
     readTime: 8,
     cover: wellnessHero,
+    tags: ["longevity", "research", "biotech", "health", "evidence", "aging"],
     blocks: standardBody(
       "longevity",
       "Five years ago, the longevity conferences felt like a different industry. The talks were declarative. The slides used the word reverse. Investors who could not pronounce senescence were writing nine-figure checks against the premise that aging was about to be solved, and that the firm doing the solving would be the largest in the history of capitalism. The room was very full and the certainty was very loud.",
@@ -272,6 +277,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-18",
     readTime: 7,
     cover: styleHero,
+    tags: ["fashion", "craft", "design", "slow", "europe", "atelier"],
     blocks: standardBody(
       "house",
       "The studio is on the second floor of a building that does not advertise itself. There is no shop downstairs. The website is a single page with an email address. The annual production is, by the founder's deliberate choice, under four hundred garments. And yet a quiet international subscription of architects, gallerists, and the kind of writer who owns three coats has, over the last decade, made this small Antwerp atelier one of the most discussed houses no one is allowed to discuss.",
@@ -294,6 +300,7 @@ export const ARTICLES: Article[] = [
     publishedAtISO: "2026-05-16",
     readTime: 11,
     cover: societyHero,
+    tags: ["social-media", "algorithms", "platforms", "audience", "design", "attention"],
     blocks: standardBody(
       "feed",
       "The feed, as a design pattern, was a remarkable invention. A single chronological column, then a single ranked column, that you could fall into for as long as you were willing to keep your thumb on a glass. Two decades of growth charts were built on the discovery that almost everyone was willing to keep their thumb on the glass for a long, long time. The industry that grew up around it became, by any honest measure, the largest cultural institution in human history. And then, slowly, almost without anyone announcing it, the feed started to lose.",
