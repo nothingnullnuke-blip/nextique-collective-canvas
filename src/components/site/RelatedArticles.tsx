@@ -1,13 +1,9 @@
 import { ARTICLES, type Article } from "@/lib/content";
+import { rankRelated } from "@/lib/related";
 import { CompactCard } from "./CompactCard";
 
 export function RelatedArticles({ current }: { current?: Article }) {
-  const pool = ARTICLES.filter((a) => a.slug !== current?.slug);
-  const sameCategory = current
-    ? pool.filter((a) => a.category === current.category)
-    : [];
-  const others = pool.filter((a) => !sameCategory.includes(a));
-  const picks = [...sameCategory, ...others].slice(0, 3);
+  const picks = current ? rankRelated(current, ARTICLES, 3) : [];
 
   if (picks.length === 0) return null;
 
